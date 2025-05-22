@@ -1,0 +1,104 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Roda da Vida</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+    }
+    form div {
+      margin-bottom: 15px;
+    }
+    label {
+      display: inline-block;
+      width: 100px;
+    }
+    input[type="number"] {
+      width: 60px;
+    }
+    button {
+      background-color: #3498db;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    canvas {
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Roda da Vida</h1>
+  <form id="form">
+    <div>
+      <label for="saude">Saúde:</label>
+      <input type="number" id="saude" min="0" max="10" value="5"><br>
+      <label for="carreira">Carreira:</label>
+      <input type="number" id="carreira" min="0" max="10" value="5"><br>
+      <label for="financas">Finanças:</label>
+      <input type="number" id="financas" min="0" max="10" value="5"><br>
+      <label for="familia">Família:</label>
+      <input type="number" id="familia" min="0" max="10" value="5"><br>
+      <label for="lazer">Lazer:</label>
+      <input type="number" id="lazer" min="0" max="10" value="5"><br>
+    </div>
+    <button type="submit">Atualizar Gráfico</button>
+  </form>
+
+  <canvas id="rodaChart" width="400" height="400"></canvas>
+
+  <script>
+    const ctx = document.getElementById('rodaChart').getContext('2d');
+    let chart = new Chart(ctx, {
+      type: 'radar',
+      data: {
+        labels: ['Saúde', 'Carreira', 'Finanças', 'Família', 'Lazer'],
+        datasets: [{
+          label: 'Roda da Vida',
+          data: [5, 5, 5, 5, 5],
+          backgroundColor: 'rgba(52, 152, 219, 0.2)',
+          borderColor: 'rgba(52, 152, 219, 1)',
+          pointBackgroundColor: 'rgba(41, 128, 185, 1)'
+        }]
+      },
+      options: {
+        responsive: true,
+        scale: {
+          ticks: {
+            min: 0,
+            max: 10,
+            stepSize: 1
+          }
+        }
+      }
+    });
+
+    document.getElementById('form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const saude = parseInt(document.getElementById('saude').value);
+      const carreira = parseInt(document.getElementById('carreira').value);
+      const financas = parseInt(document.getElementById('financas').value);
+      const familia = parseInt(document.getElementById('familia').value);
+      const lazer = parseInt(document.getElementById('lazer').value);
+
+      chart.data.datasets[0].data = [saude, carreira, financas, familia, lazer];
+      chart.update();
+    });
+  </script>
+</body>
+</html>
